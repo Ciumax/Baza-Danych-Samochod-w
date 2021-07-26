@@ -1,0 +1,206 @@
+/*
+Navicat MySQL Data Transfer
+
+Source Server         : Samochody
+Source Server Version : 50505
+Source Host           : localhost:3306
+Source Database       : drabowicz_3i
+
+Target Server Type    : MYSQL
+Target Server Version : 50505
+File Encoding         : 65001
+
+Date: 2016-02-04 01:48:38
+*/
+
+SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for klient_ad_3i
+-- ----------------------------
+DROP TABLE IF EXISTS `klient_ad_3i`;
+CREATE TABLE `klient_ad_3i` (
+  `id_klienta_ad_3i` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `imie_ad_3i` varchar(50) COLLATE utf8_polish_ci NOT NULL,
+  `nazwisko_ad_3i` varchar(65) COLLATE utf8_polish_ci NOT NULL,
+  `pesel_ad_3i` varchar(12) COLLATE utf8_polish_ci NOT NULL,
+  `nr_telefonu_ad_3i` varchar(9) COLLATE utf8_polish_ci NOT NULL,
+  `nr_dowodu_osobistego_ad_3i` varchar(10) COLLATE utf8_polish_ci NOT NULL,
+  `nazwa_firmy_ad_3i` varchar(65) COLLATE utf8_polish_ci DEFAULT NULL,
+  `nip_ad_3i` varchar(9) COLLATE utf8_polish_ci DEFAULT NULL,
+  `isDeleted_ad_3i` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`id_klienta_ad_3i`),
+  UNIQUE KEY `pesel_pk_3i` (`pesel_ad_3i`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+-- ----------------------------
+-- Records of klient_ad_3i
+-- ----------------------------
+INSERT INTO `klient_ad_3i` VALUES ('18', 'Piotr', 'Drabowicz', '55697455866', '601254868', 'WFF222312A', '', '', '1');
+INSERT INTO `klient_ad_3i` VALUES ('19', 'Aleksander', 'Kowalski', '22124433432', '505548684', 'KK232KWWP', 'Kowalczyk ZOO', '584889984', '0');
+INSERT INTO `klient_ad_3i` VALUES ('20', 'Mateusz', 'Nowakowski', '32342211231', '564633453', 'FDBS2232SF', 'Nowakson S.A.', '533453235', '0');
+INSERT INTO `klient_ad_3i` VALUES ('21', 'Maria', 'Michalska', '74598853214', '554887951', 'NSKDDW3F', 'Piekarnia Warszawska', '554899876', '0');
+INSERT INTO `klient_ad_3i` VALUES ('22', 'Micha³', 'Pospolity', '45323422356', '655746846', 'FE2232F2EF', 'Pospol Firma', '556884656', '0');
+INSERT INTO `klient_ad_3i` VALUES ('23', 'Rados³aw', 'M³ynarski', '43545656564', '668468468', '88WWTWER', 'Radpol', '343454563', '0');
+INSERT INTO `klient_ad_3i` VALUES ('24', 'Jan', 'Pastuch', '75467456334', '546456345', 'F4T3TRGDF', '', '', '0');
+
+-- ----------------------------
+-- Table structure for naprawa_ad_3i
+-- ----------------------------
+DROP TABLE IF EXISTS `naprawa_ad_3i`;
+CREATE TABLE `naprawa_ad_3i` (
+  `nr_naprawy_ad_3i` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id_samochodu_ad_3i` int(10) unsigned NOT NULL,
+  `koszt_naprawy_ad_3i` float unsigned NOT NULL,
+  `czy_ukonczono_ad_3i` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`nr_naprawy_ad_3i`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+-- ----------------------------
+-- Records of naprawa_ad_3i
+-- ----------------------------
+INSERT INTO `naprawa_ad_3i` VALUES ('16', '24', '88', '1');
+INSERT INTO `naprawa_ad_3i` VALUES ('17', '24', '200', '1');
+INSERT INTO `naprawa_ad_3i` VALUES ('18', '24', '100', '1');
+INSERT INTO `naprawa_ad_3i` VALUES ('19', '25', '200', '1');
+INSERT INTO `naprawa_ad_3i` VALUES ('20', '27', '120', '1');
+INSERT INTO `naprawa_ad_3i` VALUES ('21', '30', '5', '1');
+
+-- ----------------------------
+-- Table structure for opis_ad_3i
+-- ----------------------------
+DROP TABLE IF EXISTS `opis_ad_3i`;
+CREATE TABLE `opis_ad_3i` (
+  `id_opisu_ad_3i` int(11) NOT NULL AUTO_INCREMENT,
+  `opis_ad_3i` text COLLATE utf8_polish_ci NOT NULL,
+  PRIMARY KEY (`id_opisu_ad_3i`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+-- ----------------------------
+-- Records of opis_ad_3i
+-- ----------------------------
+INSERT INTO `opis_ad_3i` VALUES ('2', 'Aplikacja umo¿liwia zarz¹dzanie wypo¿yczalni¹ samochodów, mo¿na tutaj dodawaæ i usuwaæ klientów z poziomu programu, dodawaæ edytowaæ bazê pojazdów oraz sk³adaæ i odbieraæ zamówienia.\r\n\r\nKontakt do autora: ');
+
+-- ----------------------------
+-- Table structure for samochod_ad_3i
+-- ----------------------------
+DROP TABLE IF EXISTS `samochod_ad_3i`;
+CREATE TABLE `samochod_ad_3i` (
+  `id_samochodu_ad_3i` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `nr_rejestracyjny_ad_3i` varchar(10) COLLATE utf8_polish_ci NOT NULL,
+  `marka_ad_3i` varchar(50) COLLATE utf8_polish_ci NOT NULL,
+  `model_ad_3i` varchar(50) COLLATE utf8_polish_ci NOT NULL,
+  `szczegoly_samochodu_ad_3i` int(10) unsigned NOT NULL,
+  `cena_dzien_ad_3i` float unsigned NOT NULL,
+  `naprawa_ad_3i` int(10) unsigned DEFAULT '0',
+  `dostepnosc_ad_3i` tinyint(3) unsigned NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id_samochodu_ad_3i`),
+  UNIQUE KEY `nr_rejestracyjny` (`nr_rejestracyjny_ad_3i`),
+  UNIQUE KEY `szczegoly_samochodu` (`szczegoly_samochodu_ad_3i`),
+  KEY `FK_naprawa` (`naprawa_ad_3i`),
+  CONSTRAINT `FK_naprawa` FOREIGN KEY (`naprawa_ad_3i`) REFERENCES `naprawa_ad_3i` (`nr_naprawy_ad_3i`),
+  CONSTRAINT `FK_szczegoly_samochodu` FOREIGN KEY (`szczegoly_samochodu_ad_3i`) REFERENCES `szczegoly_samochodu_ad_3i` (`id_szczegolow_ad_3i`)
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+-- ----------------------------
+-- Records of samochod_ad_3i
+-- ----------------------------
+INSERT INTO `samochod_ad_3i` VALUES ('24', 'WGM-GF31', 'Pedgeot', 'Boxer', '26', '500', null, '0');
+INSERT INTO `samochod_ad_3i` VALUES ('25', 'ESK-6322', 'Honda', 'Civic', '27', '350', null, '1');
+INSERT INTO `samochod_ad_3i` VALUES ('26', 'WTF-4232', 'Nissan', 'Primera', '28', '350', null, '1');
+INSERT INTO `samochod_ad_3i` VALUES ('27', 'WSD-4223', 'Mazda', 'Roadster', '29', '750', null, '1');
+INSERT INTO `samochod_ad_3i` VALUES ('28', 'WGM-4443', 'Fiat', '126p', '30', '5', null, '2');
+INSERT INTO `samochod_ad_3i` VALUES ('29', 'MNS-6532', 'Ford', 'Focus', '31', '350', null, '2');
+INSERT INTO `samochod_ad_3i` VALUES ('30', 'UNK-0010', 'Statek', 'Kosmiczny', '32', '5000', null, '1');
+
+-- ----------------------------
+-- Table structure for szczegoly_samochodu_ad_3i
+-- ----------------------------
+DROP TABLE IF EXISTS `szczegoly_samochodu_ad_3i`;
+CREATE TABLE `szczegoly_samochodu_ad_3i` (
+  `id_szczegolow_ad_3i` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `poj_silnika_ad_3i` varchar(4) COLLATE utf8_polish_ci NOT NULL,
+  `moc_ad_3i` varchar(3) COLLATE utf8_polish_ci NOT NULL,
+  `kolor_ad_3i` varchar(30) COLLATE utf8_polish_ci NOT NULL,
+  `klimatyzacja_ad_3i` tinyint(3) unsigned NOT NULL,
+  `skrzynia_biegow_ad_3i` varchar(20) COLLATE utf8_polish_ci NOT NULL,
+  `naped_ad_3i` varchar(15) COLLATE utf8_polish_ci NOT NULL,
+  `rok_produkcji_ad_3i` varchar(4) COLLATE utf8_polish_ci NOT NULL,
+  `typ_ad_3i` varchar(20) COLLATE utf8_polish_ci NOT NULL,
+  PRIMARY KEY (`id_szczegolow_ad_3i`)
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+-- ----------------------------
+-- Records of szczegoly_samochodu_ad_3i
+-- ----------------------------
+INSERT INTO `szczegoly_samochodu_ad_3i` VALUES ('26', '465', '65', 'J65', '0', 'Manualna', 'Przód', '654', 'J65');
+INSERT INTO `szczegoly_samochodu_ad_3i` VALUES ('27', '88', '79', '.7897.98', '1', 'Manualna', 'Przód', '798', '/98');
+INSERT INTO `szczegoly_samochodu_ad_3i` VALUES ('28', '1600', '80', 'Srebrny metalik', '1', 'Manualna', 'Przód', '2010', 'Hatchback');
+INSERT INTO `szczegoly_samochodu_ad_3i` VALUES ('29', '1242', '60', 'Bia³y', '0', 'Manualna', 'Przód', '2005', 'Hatchback');
+INSERT INTO `szczegoly_samochodu_ad_3i` VALUES ('30', '2000', '150', 'Srebrny', '1', 'Manualna', 'Ty³', '2003', 'Hatchback');
+INSERT INTO `szczegoly_samochodu_ad_3i` VALUES ('31', '2500', '209', 'Czarny', '1', 'Automatyczna', '4WD', '2012', 'Sedan');
+INSERT INTO `szczegoly_samochodu_ad_3i` VALUES ('32', '465', '654', 'sraczkowaty', '1', 'Manualna', 'Przód', '2059', 'gówniany');
+
+-- ----------------------------
+-- Table structure for szczegoly_wypozyczenia_ad_3i
+-- ----------------------------
+DROP TABLE IF EXISTS `szczegoly_wypozyczenia_ad_3i`;
+CREATE TABLE `szczegoly_wypozyczenia_ad_3i` (
+  `nr_szczegolow_ad_3i` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id_samochodu_ad_3i` int(10) unsigned NOT NULL,
+  `koszt_wypozyczenia_ad_3i` float unsigned DEFAULT NULL,
+  `data_od_ad_3i` datetime NOT NULL,
+  `data_do_ad_3i` datetime NOT NULL,
+  `kara_ad_3i` float DEFAULT NULL,
+  PRIMARY KEY (`nr_szczegolow_ad_3i`),
+  KEY `FK_id_samochodu` (`id_samochodu_ad_3i`),
+  CONSTRAINT `FK_id_samochodu` FOREIGN KEY (`id_samochodu_ad_3i`) REFERENCES `samochod_ad_3i` (`id_samochodu_ad_3i`)
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+-- ----------------------------
+-- Records of szczegoly_wypozyczenia_ad_3i
+-- ----------------------------
+INSERT INTO `szczegoly_wypozyczenia_ad_3i` VALUES ('35', '24', '665', '2016-01-10 00:00:00', '2016-01-11 00:00:00', '0');
+INSERT INTO `szczegoly_wypozyczenia_ad_3i` VALUES ('36', '24', '665', '2016-01-10 00:00:00', '2016-01-11 00:00:00', '0');
+INSERT INTO `szczegoly_wypozyczenia_ad_3i` VALUES ('37', '24', '665', '2016-01-10 00:00:00', '2016-01-11 00:00:00', '100');
+INSERT INTO `szczegoly_wypozyczenia_ad_3i` VALUES ('38', '24', '665', '2016-01-10 00:00:00', '2016-01-11 00:00:00', '0');
+INSERT INTO `szczegoly_wypozyczenia_ad_3i` VALUES ('39', '24', '665', '2016-01-10 00:00:00', '2016-01-11 00:00:00', '0');
+INSERT INTO `szczegoly_wypozyczenia_ad_3i` VALUES ('40', '25', '97', '2016-01-11 00:00:00', '2016-01-12 00:00:00', '0');
+INSERT INTO `szczegoly_wypozyczenia_ad_3i` VALUES ('41', '25', '97', '2016-01-11 00:00:00', '2016-01-12 00:00:00', '297');
+INSERT INTO `szczegoly_wypozyczenia_ad_3i` VALUES ('42', '26', '640', '2016-01-11 00:00:00', '2016-01-19 00:00:00', '0');
+INSERT INTO `szczegoly_wypozyczenia_ad_3i` VALUES ('43', '26', '80', '2016-01-11 00:00:00', '2016-01-12 00:00:00', '0');
+INSERT INTO `szczegoly_wypozyczenia_ad_3i` VALUES ('44', '29', '8250', '2016-01-24 00:00:00', '2016-02-18 00:00:00', '0');
+INSERT INTO `szczegoly_wypozyczenia_ad_3i` VALUES ('45', '28', '920', '2016-01-26 00:00:00', '2016-01-30 00:00:00', '0');
+INSERT INTO `szczegoly_wypozyczenia_ad_3i` VALUES ('46', '27', '25', '2016-01-28 00:00:00', '2016-01-29 00:00:00', '0');
+INSERT INTO `szczegoly_wypozyczenia_ad_3i` VALUES ('47', '29', '330', '2016-02-01 00:00:00', '2016-02-02 00:00:00', '0');
+
+-- ----------------------------
+-- Table structure for wypozyczenie_ad_3i
+-- ----------------------------
+DROP TABLE IF EXISTS `wypozyczenie_ad_3i`;
+CREATE TABLE `wypozyczenie_ad_3i` (
+  `nr_wypozyczenia_ad_3i` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id_klienta_ad_3i` int(10) unsigned NOT NULL,
+  `szczegoly_wypozyczenia_ad_3i` int(10) unsigned NOT NULL,
+  `zwrot_ad_3i` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`nr_wypozyczenia_ad_3i`),
+  KEY `FK_szczegoly_wypozycenia` (`szczegoly_wypozyczenia_ad_3i`),
+  KEY `FK_id_klienta` (`id_klienta_ad_3i`),
+  CONSTRAINT `FK_id_klienta` FOREIGN KEY (`id_klienta_ad_3i`) REFERENCES `klient_ad_3i` (`id_klienta_ad_3i`),
+  CONSTRAINT `FK_szczegoly_wypozycenia` FOREIGN KEY (`szczegoly_wypozyczenia_ad_3i`) REFERENCES `szczegoly_wypozyczenia_ad_3i` (`nr_szczegolow_ad_3i`)
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+-- ----------------------------
+-- Records of wypozyczenie_ad_3i
+-- ----------------------------
+INSERT INTO `wypozyczenie_ad_3i` VALUES ('33', '18', '37', '1');
+INSERT INTO `wypozyczenie_ad_3i` VALUES ('34', '18', '38', '1');
+INSERT INTO `wypozyczenie_ad_3i` VALUES ('35', '19', '39', '1');
+INSERT INTO `wypozyczenie_ad_3i` VALUES ('36', '19', '40', '1');
+INSERT INTO `wypozyczenie_ad_3i` VALUES ('37', '19', '41', '1');
+INSERT INTO `wypozyczenie_ad_3i` VALUES ('38', '20', '42', '1');
+INSERT INTO `wypozyczenie_ad_3i` VALUES ('39', '20', '43', '1');
+INSERT INTO `wypozyczenie_ad_3i` VALUES ('40', '20', '44', '1');
+INSERT INTO `wypozyczenie_ad_3i` VALUES ('41', '21', '45', '0');
+INSERT INTO `wypozyczenie_ad_3i` VALUES ('42', '22', '46', '1');
+INSERT INTO `wypozyczenie_ad_3i` VALUES ('43', '19', '47', '0');
